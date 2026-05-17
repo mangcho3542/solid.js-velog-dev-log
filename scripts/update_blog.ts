@@ -3,8 +3,8 @@ import { mkdir } from "node:fs/promises";
 import { join } from "node:path";
 
 // 벨로그 RSS 피드 URL
-// example : const rssUrl = "https://api.velog.io/rss/@velog_id";
-const rssUrl = `https://api.velog.io/rss/${process.env.VELOG_ID}`;
+// example : const rssUrl = "https://api.velog.io/rss/@rimgosu";
+const rssUrl = "https://api.velog.io/rss/@mangchohyeon";
 
 const repoPath = ".";
 const postsDir = join(repoPath, "velog-posts");
