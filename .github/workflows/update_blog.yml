@@ -1,0 +1,35 @@
+name: Update Blog Posts
+
+on:
+  push:
+    branches:
+      - main # 또는 워크플로우를 트리거하고 싶은 브랜치 이름
+  schedule:
+    - cron: '0 0 * * *'  # 매일 자정에 실행, UTC 협정 세계시 기준 (한국 시간 기준 오전 9시)
+    - cron: '0 15 * * *' # 매일 자정에 실행, 한국 시간 기준 (UTC 15:00)
+
+jobs:
+  update_blog:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GH_PAT }}
+
+    - name: Configure git
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+
+    - name: Install dependencies
+      run: bun install
+
+    - name: Run script
+      run: bun scripts/update_blog.ts
